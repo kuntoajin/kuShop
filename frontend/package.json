@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack serve --config config/webpack.dev",
+    "style": "tailwindcss -i ./src/styles/default.css -o ./build/styles/output.css --watch",
     "build": "webpack --config config/webpack.prod"
   },
   "devDependencies": {
@@ -25,6 +26,7 @@
   "dependencies": {
     "axios": "^0.27.2",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.3.0"
   }
 }

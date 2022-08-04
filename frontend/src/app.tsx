@@ -1,37 +1,26 @@
 import { useEffect, useState } from "react"
+import { Routes, Route, Link } from "react-router-dom";
 import axios from 'axios'
-
-interface Data {
-    datas: [];
-    title: string;
-    image: string;
-}
+import Home from "./pages/components/home";
+import Detail from "./pages/components/detail";
 
 const App: React.FC<{}> = () => {
-    const [datas, setDatas] = useState<Data[]>([])
+    const [datas, setDatas] = useState<[]>([])
 
     useEffect(() => {
         const dataFetch = async () => {
             const response = await axios.get('https://fakestoreapi.com/products')
-            setDatas([...response.data])
+            setDatas(response.data)
         }
         dataFetch()
     }, [])
-    console.log(datas)
+
     return (
         <div className="container">
-            <h1>KuShop</h1>
-            <input type="text" />
-            <div>
-                {datas?.map((data, index) => (
-                    <ul key={index}>
-                        <li>
-                            <p>{data.title}</p>
-                            <img src={data.image} alt={data.title} />
-                        </li>
-                    </ul>
-                ))}
-            </div>
+            <Routes>
+                <Route path="/" element={<Home datas={datas} />} />
+                <Route path="product/:id" element={<Detail datas={datas} />} />
+            </Routes>
         </div>
     )
 }

@@ -1,15 +1,15 @@
 interface PropData {
-    data: []
+    datas: []
 }
 
-const Home: React.FC<PropData> = ({data}): JSX.Element => {
+const Home: React.FC<PropData> = ({datas}): JSX.Element => {
     return (
         <div className="content">
             <h1>KuShop</h1>
             <input type="text" />
             <div>
                 <ul>
-                    {data?.map((product, index) => (
+                    {datas?.map((product, index) => (
                             <li key={index}>
                                 <a className="font-bold" href={`/product/${product['id']}`}>{product['title']}</a>
                                 <img src={product['image']} alt={product['title']} width='50' height='50' />

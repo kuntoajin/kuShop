@@ -6,7 +6,14 @@ module.exports = {
   output: {
     filename: "[hash].js",
     path: path.resolve(__dirname, "..", "build"),
+    publicPath: '/',
     clean: true,
+  },
+  devServer: {
+    static: {
+      directory: path.join(__dirname, '..', 'build'),
+    },
+    historyApiFallback: true,
   },
   module: {
     rules: [
