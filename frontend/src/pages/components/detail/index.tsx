@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import axios from "axios";
-import snap from '../../../library/snap.js'
 
 interface PropData {
     datas?: [];
@@ -35,16 +34,14 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
     }
 
     useEffect(() => {
-        token && snap.pay('TRANSACTION_TOKEN_HERE')
-    })
-    console.log(token)
+        console.log(token)
+        token && window?.snap?.pay(token)
+        // console.log(window.snap.pay(token))
+    }, [token])
 
     return (
         <div className="content">
             <h1>KuShop</h1>
-            <script type="text/javascript"
-                src="https://app.sandbox.midtrans.com/snap/snap.js"
-                data-client-key="SB-Mid-client-WjzrUPLaHVUvMFJp"></script>
             <input type="text" />
             <div>
                 <p>{selectedProduct?.title}</p>
