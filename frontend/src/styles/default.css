@@ -9,3 +9,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
 }
+
+.star-rating-decimal {
+    fill: url(#gradient-star-decimal)
+}
