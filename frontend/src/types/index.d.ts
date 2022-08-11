@@ -5,3 +5,5 @@ declare global {
     snap: any; // 👈️ turn off type checking
   }
 }
+
+declare module '../../../../config/firebase';

@@ -16,7 +16,7 @@ const App: React.FC<{}> = () => {
     }, [])
 
     return (
-        <div className="container-xl mx-auto px-4">
+        <div className="container mx-auto px-3">
             <Routes>
                 <Route path="/" element={<Home datas={datas} />} />
                 <Route path="product/:id" element={<Detail datas={datas} />} />
