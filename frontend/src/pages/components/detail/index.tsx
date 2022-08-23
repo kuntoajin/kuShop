@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import axios from "axios";
+import { currencyConverter } from '../../../library/currencyConverter'
+import Modal from "../../../components/modal";
 
 interface PropData {
     datas?: [];
@@ -19,6 +21,8 @@ interface Data {
 const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
     const [selectedProduct, setSelectedProduct] = useState<Data>()
     const [token, setToken] = useState<string>('')
+    const [usdToIdr, setUsdToIdr] = useState<string>('')
+    const [openModal, isOpenModal] = useState<boolean>(false)
     let {id} = useParams()
 
     useEffect(() => {
@@ -77,6 +81,14 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
         showRating = selectedProduct?.rating?.rate
     }
 
+    useEffect(() => {
+        const dataFetch = async () => {
+            const idrConverted = await currencyConverter(selectedProduct?.price)
+            setUsdToIdr(idrConverted)
+        }
+        dataFetch()
+    }, [selectedProduct])
+
     return (
         <div className="content">
             <h1>KuShop</h1>
@@ -90,15 +102,16 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
                 <div className="mx-8 border-r border-black">
                     <h1 className="text-4xl font-bold">{selectedProduct?.title}</h1>
                     <div className="flex items-center mt-3">
-                        <p className="text-4xl font-bold text-blue-500">${selectedProduct?.price}</p>
+                        <p className="text-4xl font-bold text-blue-500">{usdToIdr}</p>
                         <div className="flex ml-6">{starRating}</div>
                         <div className="flex">{decilmalRating}</div>
                         <div className="flex">{noneRating}</div>
                         <p className="text-lg ml-3">{`(${showRating})`}</p>
+                        {openModal && <Modal name={selectedProduct?.title} price={usdToIdr} image={selectedProduct?.image} isOpenModal={isOpenModal} />}
                     </div>
                 </div>
                 <div className="w-52">
-                    <button className="bg-blue-500 p-2 w-full text-white font-bold tracking-wider rounded-lg mb-4 py-3" onClick={handlePost}>Tambah Keranjang</button>
+                    <button className="bg-blue-500 p-2 w-full text-white font-bold tracking-wider rounded-lg mb-4 py-3" onClick={() => isOpenModal(!openModal)}>Tambah Keranjang</button>
                     <button className="bg-blue-500 p-2 w-full text-white font-bold tracking-wider rounded-lg py-3" onClick={handlePost}>Beli</button>
                 </div>
             </div>
