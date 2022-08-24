@@ -8,8 +8,10 @@ import './styles/default.css'
 const container = document.querySelector("#root")!;
 const root = createRoot(container);
 
-root.render(  <React.StrictMode>
+root.render(  
+  <React.StrictMode>
     <BrowserRouter>
       <App />
     </BrowserRouter>
-  </React.StrictMode>);
+  </React.StrictMode>
+);

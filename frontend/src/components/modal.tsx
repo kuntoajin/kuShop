@@ -2,40 +2,35 @@
 import { Fragment, useRef, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { ShoppingCartIcon } from '@heroicons/react/outline'
+import axios from 'axios'
 
 type PropData = {
     price?: number | string
     isOpenModal: (openModal: boolean) => void
     name?: string
     image?: string
+    id?: number
 }
 
 type DataProductCart = {
     name: string
 }
 
-const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image }) => {
+const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
   const [open, setOpen] = useState(true)
     const ListProducts: DataProductCart[] | string = []
   const cancelButtonRef = useRef(null)
 
-    const addToCart = () => {
-        const GetItem = JSON.parse(localStorage.getItem('Product Cart'))
-        
-        if(GetItem) {
-            const items = [...GetItem]
-            console.log(typeof items)
-            ListProducts.push(items)
-            console.log(typeof ListProducts)
-            const parsed: string = JSON.stringify(ListProducts)
-            localStorage.setItem('Product Cart', parsed)
-        } else{
-            const parsed: string = JSON.stringify([{name}])
-            localStorage.setItem('Product Cart', parsed)
-        }
+    const addToCart = async () => {
+      const response = await axios.post('http://localhost:3500/api/addToCart', {
+        productName: name,
+        price,
+        image,
+        id
+      })
+      console.log(response)
         isOpenModal(false)
     }
-
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={isOpenModal}>

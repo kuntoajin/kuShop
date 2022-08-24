@@ -43,9 +43,9 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
     }, [token])
 
     const ratingProduct: undefined | number = selectedProduct?.rating?.rate && Math.floor(selectedProduct?.rating?.rate)
-    let starRating:JSX.Element[] = []
+    let starRating: JSX.Element[] = []
     let decilmalRating: JSX.Element[] = []
-    let noneRating:JSX.Element[] = []
+    let noneRating: JSX.Element[] = []
     let showRating: number | undefined | string
 
     if(ratingProduct) {
@@ -59,13 +59,15 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
     if(ratingProduct) {
         const decimalRatingProduct = selectedProduct?.rating?.rate && selectedProduct?.rating?.rate - ratingProduct
         const getLastRatingProduct = decimalRatingProduct && Math.ceil(decimalRatingProduct*100)
+
         decilmalRating.push(<svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20">
               <linearGradient id="gradient-star-decimal">
-            <stop stopColor="#eab308" offset={`${getLastRatingProduct}%`} />
-            <stop stopColor="#64748b" offset={`${getLastRatingProduct}%`} />
-        </linearGradient>
-        <path className="star-rating-decimal" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-    </svg>)
+                <stop stopColor="#eab308" offset={`${getLastRatingProduct}%`} />
+                <stop stopColor="#64748b" offset={`${getLastRatingProduct}%`} />
+            </linearGradient>
+            <path className="star-rating-decimal" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+        </svg>
+        )
     }
     if(ratingProduct) {
         for(let i = 1; i <= (4-ratingProduct); i++) {
@@ -91,8 +93,15 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
 
     return (
         <div className="content">
-            <h1>KuShop</h1>
-            <input type="text" />
+            <header className="flex">
+                <h1>KuShop</h1>
+                <input type="text" />
+                <a href='/cart'>
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+                    </svg>
+                </a>
+            </header>
             <div className="flex">
                 <div className="h-96 w-80 border-4 rounded-lg border-blue-500 flex justify-center items-center">
                     <div>
@@ -107,7 +116,13 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
                         <div className="flex">{decilmalRating}</div>
                         <div className="flex">{noneRating}</div>
                         <p className="text-lg ml-3">{`(${showRating})`}</p>
-                        {openModal && <Modal name={selectedProduct?.title} price={usdToIdr} image={selectedProduct?.image} isOpenModal={isOpenModal} />}
+                        {openModal && <Modal 
+                            name={selectedProduct?.title} 
+                            price={usdToIdr} 
+                            image={selectedProduct?.image} 
+                            isOpenModal={isOpenModal} 
+                            id={selectedProduct?.id}
+                        />}
                     </div>
                 </div>
                 <div className="w-52">
