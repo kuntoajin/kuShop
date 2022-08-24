@@ -11,7 +11,7 @@ const Checkout: React.FC = (): JSX.Element => {
         dataFetch()
     }, [])
     return (
-<ul>
+        <ul>
             {
                 data.map((list, index) => (
                     <li key={index}>
