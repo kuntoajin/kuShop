@@ -18,7 +18,8 @@ type DataProductCart = {
 
 const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
   const [open, setOpen] = useState(true)
-    const ListProducts: DataProductCart[] | string = []
+  const [quantity, setQuantity] = useState<number | string>(1)
+  const ListProducts: DataProductCart[] | string = []
   const cancelButtonRef = useRef(null)
 
     const addToCart = async () => {
@@ -26,11 +27,12 @@ const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
         productName: name,
         price,
         image,
-        id
+        id,
+        quantity
       })
-      console.log(response)
         isOpenModal(false)
     }
+
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={isOpenModal}>
@@ -72,10 +74,25 @@ const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
                 </div>
                 <div className='px-4 py-3 sm:px-6 sm:flex'>
                     <img src={image} alt="" className='w-12 mr-4'/>
-                    <p className="text-gray-500 font-bold">
-                        {name}
-                    </p>
-                    <p className="text-gray-500">{price}</p>
+                    <div className='flex flex-1 flex-col'>
+                      <div className='flex justify-between'>
+                        <p className="text-gray-500 font-bold">
+                            {name}
+                        </p>
+                        <p className="text-gray-500">{price}</p>
+                      </div>
+                      <div>
+                        <input 
+                          className='border-2' 
+                          type="number" 
+                          id="quantity" 
+                          name="quantity" 
+                          min='1' 
+                          defaultValue='1' 
+                          onChange={e => setQuantity(e.target.value)}
+                        />
+                      </div>
+                    </div>
                 </div>
                 <div className='px-4 py-3 sm:px-6 sm:flex'>
                     <div className='border-t border-black w-full sm:flex justify-between'>

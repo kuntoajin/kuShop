@@ -27,9 +27,8 @@ const Cart: React.FC = (): JSX.Element => {
         if(login) {
             navigate('/', { replace: true })
         }
-        console.log(login)
     }, [])
-
+    console.log(cart)
     return (
         <ul>
             {
