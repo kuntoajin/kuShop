@@ -10,13 +10,14 @@ type PropData = {
     name?: string
     image?: string
     id?: number
+    priceShow?: string
 }
 
 type DataProductCart = {
     name: string
 }
 
-const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
+const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id, priceShow }) => {
   const [open, setOpen] = useState(true)
   const [quantity, setQuantity] = useState<number | string>(1)
   const ListProducts: DataProductCart[] | string = []
@@ -26,13 +27,14 @@ const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
       const response = await axios.post('http://localhost:3500/api/addToCart', {
         productName: name,
         price,
+        priceShow,
         image,
         id,
         quantity
       })
         isOpenModal(false)
     }
-
+    console.log(priceShow)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" initialFocus={cancelButtonRef} onClose={isOpenModal}>
@@ -79,7 +81,7 @@ const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
                         <p className="text-gray-500 font-bold">
                             {name}
                         </p>
-                        <p className="text-gray-500">{price}</p>
+                        <p className="text-gray-500">{priceShow}</p>
                       </div>
                       <div>
                         <input 
@@ -100,7 +102,7 @@ const Modal: React.FC<PropData> = ({ price, isOpenModal, name, image, id }) => {
                             Total
                         </p>
                         <p className="text-gray-500 font-bold">
-                            {price}
+                            {priceShow}
                         </p>
                     </div>
                 </div>

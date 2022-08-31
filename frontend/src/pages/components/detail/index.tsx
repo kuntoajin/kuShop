@@ -16,6 +16,7 @@ interface Data {
     rating?: {
         rate?: number
     }
+    priceShow: string
 }
 
 const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
@@ -118,10 +119,11 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
                         <p className="text-lg ml-3">{`(${showRating})`}</p>
                         {openModal && <Modal 
                             name={selectedProduct?.title} 
-                            price={usdToIdr} 
+                            price={parseInt(usdToIdr.replace(/[Rp.]/g, ''))} 
                             image={selectedProduct?.image} 
                             isOpenModal={isOpenModal} 
                             id={selectedProduct?.id}
+                            priceShow={usdToIdr}
                         />}
                     </div>
                 </div>
