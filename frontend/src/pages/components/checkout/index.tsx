@@ -20,7 +20,7 @@ const Checkout: React.FC = (): JSX.Element => {
         setToken(response?.data?.token)
     }
     const TotalCost = data.reduce((sum, p) => sum + p.price, 0)
-    console.log(data)
+
     const formatter = new Intl.NumberFormat("id-ID", {
         style: "currency",
         currency: "IDR",
