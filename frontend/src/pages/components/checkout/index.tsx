@@ -1,7 +1,5 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
-import { currencyConverter } from '../../../library/currencyConverter'
-import Modal from "../../../components/modal"
 
 const Checkout: React.FC = (): JSX.Element => {
     const [data, setData] = useState<any[]>([])

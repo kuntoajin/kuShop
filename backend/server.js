@@ -6,6 +6,7 @@ const app = express();
 const router = express.Router();
 
 const data = require("./data/user.json");
+const e = require("express");
 
 const PORT = 3500;
 
@@ -50,7 +51,11 @@ router.post("/api/addToCart", (req, res) => {
 });
 
 router.get("/api/getCart", (req, res) => {
-  res.json(cart);
+  if (cart.length < 1) {
+    res.json({ message: "Keranjang kosong" });
+  } else {
+    res.json(cart);
+  }
 });
 
 router.get("/api/addToCheckout", (req, res) => {
@@ -91,6 +96,11 @@ router.get("/api/checkLogin", (req, res) => {
 router.get("/api/logout", (req, res) => {
   checkLogin = false;
   res.json({ isLogin: checkLogin });
+});
+
+router.post("/api/delete", (req, res) => {
+  console.log(req.body);
+  cart.splice(req.body.index, 1);
 });
 
 app.use("/", router);
