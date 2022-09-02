@@ -62,6 +62,7 @@ router.get("/api/addToCheckout", (req, res) => {
   checkout = {
     productName: req.body.name,
   };
+  console.log(cart);
   res.json(cart);
 });
 

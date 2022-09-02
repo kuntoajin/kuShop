@@ -29,7 +29,7 @@ const Checkout: React.FC = (): JSX.Element => {
     useEffect(() => {
         token && window?.snap?.pay(token)
     }, [token])
-
+    console.log(data)
     return (
         <>
             <ul>

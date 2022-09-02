@@ -7,6 +7,7 @@ import Cart from "./pages/components/cart";
 import Login from "./pages/components/login";
 import Checkout from "./pages/components/checkout";
 import Success from "./pages/components/success";
+import Status from "./pages/components/status";
 
 const App: React.FC<{}> = () => {
     const [datas, setDatas] = useState<[]>([])
@@ -28,6 +29,7 @@ const App: React.FC<{}> = () => {
                 <Route path="checkout" element={<Checkout />} />
                 <Route path="login" element={<Login />} />
                 <Route path="success" element={<Success />} />
+                <Route path="status" element={<Status />} />
             </Routes>
         </div>
     )
