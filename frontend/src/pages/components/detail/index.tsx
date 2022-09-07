@@ -92,6 +92,13 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
         dataFetch()
     }, [selectedProduct])
 
+    const formatter = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+      });
+
+    const priceIdr = formatter.format(selectedProduct?.price)
+
     return (
         <div className="content">
             <header className="flex">
@@ -106,24 +113,26 @@ const Detail: React.FC<PropData> = ({datas}): JSX.Element => {
             <div className="flex">
                 <div className="h-96 w-80 border-4 rounded-lg border-blue-500 flex justify-center items-center">
                     <div>
-                        <img src={selectedProduct?.image} alt="" className='w-fit w-44 mx-auto leading-[3rem]' />
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-20 h-20">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                        </svg>
                     </div>
                 </div>
                 <div className="mx-8 border-r border-black">
                     <h1 className="text-4xl font-bold">{selectedProduct?.title}</h1>
                     <div className="flex items-center mt-3">
-                        <p className="text-4xl font-bold text-blue-500">{usdToIdr}</p>
+                        <p className="text-4xl font-bold text-blue-500">{priceIdr}</p>
                         <div className="flex ml-6">{starRating}</div>
                         <div className="flex">{decilmalRating}</div>
                         <div className="flex">{noneRating}</div>
                         <p className="text-lg ml-3">{`(${showRating})`}</p>
                         {openModal && <Modal 
                             name={selectedProduct?.title} 
-                            price={parseInt(usdToIdr.replace(/[Rp.]/g, ''))} 
+                            price={selectedProduct?.price} 
                             image={selectedProduct?.image} 
                             isOpenModal={isOpenModal} 
                             id={selectedProduct?.id}
-                            priceShow={usdToIdr}
+                            priceShow={priceIdr}
                         />}
                     </div>
                 </div>

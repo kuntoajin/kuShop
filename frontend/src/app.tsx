@@ -8,13 +8,16 @@ import Login from "./pages/components/login";
 import Checkout from "./pages/components/checkout";
 import Success from "./pages/components/success";
 import Status from "./pages/components/status";
+import Trans from "./pages/components/trans";
+import Arsip from "./pages/components/arsip";
+import Notif from "./pages/components/notif";
 
 const App: React.FC<{}> = () => {
     const [datas, setDatas] = useState<[]>([])
 
     useEffect(() => {
         const dataFetch = async () => {
-            const response = await axios.get('https://fakestoreapi.com/products')
+            const response = await axios.get('http://localhost:3500/api/getFiles')
             setDatas(response.data)
         }
         dataFetch()
@@ -30,6 +33,9 @@ const App: React.FC<{}> = () => {
                 <Route path="login" element={<Login />} />
                 <Route path="success" element={<Success />} />
                 <Route path="status" element={<Status />} />
+                <Route path="trans" element={<Trans />} />
+                <Route path="arsip" element={<Arsip />} />
+                <Route path="notif" element={<Notif />} />
             </Routes>
         </div>
     )

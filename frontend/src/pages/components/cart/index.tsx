@@ -64,7 +64,6 @@ const Cart: React.FC = (): JSX.Element => {
                                 <div>
                                     <p>{list['productName']}</p>
                                     <p>{list['priceShow']}</p>
-                                    <p>Jumlah barang: {list['quantity']}</p>
                                 </div>
                             </a>
                             <button onClick={() => handleDelete(index)}>

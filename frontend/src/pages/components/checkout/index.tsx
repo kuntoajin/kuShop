@@ -1,24 +1,33 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
+import { useNavigate } from "react-router-dom"
 
 const Checkout: React.FC = (): JSX.Element => {
     const [data, setData] = useState<any[]>([])
     const [token, setToken] = useState<string>('')
+    let navigate = useNavigate()
+
     useEffect(() => {
         const dataFetch = async () => {
             const response = await axios.get('http://localhost:3500/api/addToCheckout')
             setData(response?.data)
+            console.log(response)
         }
         dataFetch()
     }, [])
-    const handlePost = async () => {
-        const response = await axios.post('http://localhost:3500/api/getToken', {
-            harga: TotalCost,
-            first_name: "Gunawan",
-            last_name: "Sulis"
-        })
-        setToken(response?.data?.token)
+
+    const addToPayment = async () => {
+        try {
+            const response = await axios.post('http://localhost:3500/api/addToPayment', {
+                data
+            })
+            console.log(response)
+            navigate("/trans", { replace: true })
+        } catch (error) {
+            throw error
+        }
     }
+
     const TotalCost = data.reduce((sum, p) => sum + p.price, 0)
 
     const formatter = new Intl.NumberFormat("id-ID", {
@@ -29,7 +38,7 @@ const Checkout: React.FC = (): JSX.Element => {
     useEffect(() => {
         token && window?.snap?.pay(token)
     }, [token])
-    console.log(data)
+
     return (
         <>
             <ul>
@@ -48,7 +57,9 @@ const Checkout: React.FC = (): JSX.Element => {
                 <p>Kirim ke alamat: Jakarta</p>
                 <strong>Total belanja: {formatter.format(TotalCost)}</strong>
             </div>
-            <button className="bg-blue-500 p-2 text-white font-bold tracking-wider rounded-lg py-3 mt-4" onClick={handlePost}>Bayar</button>
+            <button className="bg-blue-500 p-2 text-white font-bold tracking-wider rounded-lg py-3 mt-4" onClick={addToPayment}>
+                Proses
+            </button>
         </>
     )
 }

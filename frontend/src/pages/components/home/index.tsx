@@ -6,12 +6,12 @@ import axios from 'axios'
 interface PropData {
     datas: []
 }
-// console.log(db)
 const Home: React.FC<PropData> = ({datas}): JSX.Element => {
     const [open, isOpen] = useState(true)
     const [login, isLogin] = useState(false)
     const [username, setUsername] = useState('Guest')
-    datas.splice(9, 10)
+    const [files, setFiles] = useState<[]>([])
+    // datas.splice(9, 10)
     
     const handleLogout = async () => {
         const response = await axios.get('http://localhost:3500/api/logout')
@@ -20,12 +20,12 @@ const Home: React.FC<PropData> = ({datas}): JSX.Element => {
 
     useEffect(() => {
         const dataFetch = async () => {
-            const response = await axios.get('http://localhost:3500/api/checkLogin')
-            setUsername(response.data.isLogin ? response.data.username : 'Guest')
-            isLogin(response.data.isLogin ? true : false)
+            const response = await axios.get('http://localhost:3500/api/getFiles')
+            console.log(response)
+            setFiles(response.data)
         }
         dataFetch()
-    }, [login])
+    }, [])
 
     return (
         <div className="content">
@@ -53,13 +53,16 @@ const Home: React.FC<PropData> = ({datas}): JSX.Element => {
             </header>
             <div className='bg-blue-500 pb-8 rounded-b-lg'>
                 <ul className={`flex justify-center px-3 ${open ? 'block' : 'hidden'}`}>
-                    {datas?.map((product, index) => (
+                    {files?.map((file, index) => (
                         <li key={index} className='flex-1 mx-3 shadow-lg py-4 px-3 bg-white rounded-md'>
-                            <a href={`/product/${product['id']}`}>
-                                <div className='w-[50px] h-[100px] mx-auto'>
-                                    <img src={product['image']} alt={product['title']} className="mx-auto w-28"/>
+                            <a href={`/product/${file['id']}`}>
+                                <div className='flex justify-center'>
+                                    {/* <img src={product['image']} alt={product['title']} className="mx-auto w-28"/> */}
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-20 h-20">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" />
+                                    </svg>
                                 </div>
-                                <p className="font-bold overflow-hidden truncate whitespace-normal">{product['title']}</p>
+                                <p className="font-bold overflow-hidden truncate whitespace-normal">{file['filename']}</p>
                             </a>
                         </li>
                     ))}
