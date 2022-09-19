@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { Routes, Route, Link } from "react-router-dom";
-import axios from 'axios'
+import axios from 'axios';
 import Home from "./pages/components/home";
 import Detail from "./pages/components/detail";
 import Cart from "./pages/components/cart";

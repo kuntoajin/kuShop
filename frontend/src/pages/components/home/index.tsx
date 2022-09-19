@@ -6,6 +6,13 @@ import axios from 'axios'
 interface PropData {
     datas: []
 }
+
+interface Options {
+    body: string
+    dir: string
+    image: string
+}
+
 const Home: React.FC<PropData> = ({datas}): JSX.Element => {
     const [open, isOpen] = useState(true)
     const [login, isLogin] = useState(false)
@@ -18,13 +25,27 @@ const Home: React.FC<PropData> = ({datas}): JSX.Element => {
         isLogin(response?.data?.isLogin)
     }
 
+    function showNotification() {
+        if (Notification.permission !== 'granted') {
+          Notification.requestPermission().then(permission => {
+            console.log(permission)
+          })
+        } else if(Notification.permission === 'granted') {
+          console.log(Notification.permission)
+        }
+    }
     useEffect(() => {
         const dataFetch = async () => {
             const response = await axios.get('http://localhost:3500/api/getFiles')
             console.log(response)
             setFiles(response.data)
         }
+        showNotification()
         dataFetch()
+    }, [])
+
+    useEffect(() => {
+        // throw Error("error")
     }, [])
 
     return (
@@ -71,6 +92,7 @@ const Home: React.FC<PropData> = ({datas}): JSX.Element => {
                     <button onClick={() => isOpen(!open)} className='font-bold text-white'>{open ? 'Tutup' : 'Tampilkan'}</button>
                 </div>
             </div>
+            <button onClick={() => {throw Error("error")}}>error</button>
         </div>
     )
 }
